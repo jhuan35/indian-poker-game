@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Poker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="lobby-screen" class="screen active">
+        <div class="container">
+            <h1>🃏 Indian Poker</h1>
+            <p class="subtitle">Blind Man's Bluff</p>
+            
+            <div class="lobby-options">
+                <div class="option-card">
+                    <h2>Create Game</h2>
+                    <input type="text" id="create-name" placeholder="Your name" maxlength="20">
+                    <button id="create-btn" class="btn btn-primary">Create Room</button>
+                </div>
+                
+                <div class="divider">OR</div>
+                
+                <div class="option-card">
+                    <h2>Join Game</h2>
+                    <input type="text" id="join-name" placeholder="Your name" maxlength="20">
+                    <input type="text" id="room-code" placeholder="Room code" maxlength="4">
+                    <button id="join-btn" class="btn btn-primary">Join Room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="waiting-screen" class="screen">
+        <div class="container">
+            <h1>Waiting for opponent...</h1>
+            <div class="room-code-display">
+                <p>Room Code:</p>
+                <h2 id="display-room-code"></h2>
+            </div>
+            <p class="info-text">Share this code with your friend!</p>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="player-info opponent-info">
+                    <h3 id="opponent-name">Opponent</h3>
+                    <div class="chips">💰 <span id="opponent-chips">100</span></div>
+                    <div class="bet">Bet: <span id="opponent-bet">0</span></div>
+                </div>
+                
+                <div class="game-info">
+                    <div class="hand-number">Hand #<span id="hand-number">1</span></div>
+                    <div class="pot">Pot: <span id="pot">0</span> chips</div>
+                    <div class="room-code-small">Room: <span id="game-room-code"></span></div>
+                </div>
+                
+                <div class="player-info your-info">
+                    <h3 id="your-name">You</h3>
+                    <div class="chips">💰 <span id="your-chips">100</span></div>
+                    <div class="bet">Bet: <span id="your-bet">0</span></div>
+                </div>
+            </div>
+
+            <div class="cards-area">
+                <div class="card-container opponent-card-container">
+                    <div class="card" id="opponent-card">
+                        <div class="card-content">A♠</div>
+                    </div>
+                    <p class="card-label">Opponent's Card</p>
+                </div>
+                
+                <div class="vs">VS</div>
+                
+                <div class="card-container your-card-container">
+                    <div class="card card-back" id="your-card">
+                        <div class="card-content">?</div>
+                    </div>
+                    <p class="card-label">Your Card (Hidden)</p>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <div id="turn-indicator" class="turn-indicator">
+                    Waiting for opponent...
+                </div>
+                
+                <div id="action-buttons" class="action-buttons">
+                    <button id="fold-btn" class="btn btn-danger">Fold</button>
+                    <button id="check-btn" class="btn btn-secondary">Check</button>
+                    <button id="call-btn" class="btn btn-success">Call <span id="call-amount"></span></button>
+                    <button id="raise-btn" class="btn btn-primary">Raise</button>
+                </div>
+                
+                <div id="raise-controls" class="raise-controls" style="display: none;">
+                    <input type="number" id="raise-amount" min="1" placeholder="Raise amount">
+                    <button id="confirm-raise-btn" class="btn btn-primary">Confirm Raise</button>
+                    <button id="cancel-raise-btn" class="btn btn-secondary">Cancel</button>
+                    <p class="raise-info">Min raise: <span id="min-raise">1</span> | Raises left: <span id="raises-left">2</span></p>
+                </div>
+            </div>
+
+            <div id="result-area" class="result-area" style="display: none;">
+                <h2 id="result-message"></h2>
+                <button id="next-hand-btn" class="btn btn-primary" style="display: none;">Next Hand</button>
+                <button id="new-game-btn" class="btn btn-success">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-message" class="error-message"></div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
