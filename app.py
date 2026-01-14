@@ -6,7 +6,7 @@ from game_logic import Game, GameRoom
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'indian-poker-secret-key'
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
 
 # Store active game rooms
 game_rooms = {}
